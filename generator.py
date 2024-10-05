@@ -57,9 +57,46 @@ def generar_instancia(num_asignaturas, num_salas, num_dias, num_bloques):
 # -                 -
 
 # Ejemplo de uso
+def num_salas_asig():
+    tipo_instancia = random.choice(['mediana', 'grande'])
+    if tipo_instancia == 'mediana':
+        # Selección de cantidad de asignaturas y salas dentro de los rangos medianos
+        num_salas = random.choice([3, 4, 5, 6, 7])
+        if num_salas==3:
+            num_asig=random.randint(30,35)
+        elif num_salas==4:
+            num_asig=random.randint(45,49)
+        elif num_salas==5:
+            num_asig = random.randint(60,64)
+        elif num_salas==6:
+            num_asig = random.randint(70,74)
+        else:
+            num_asig= random.randint(80,84)
+        
+    elif tipo_instancia == 'grande':
+        # Selección de cantidad de asignaturas y salas dentro de los rangos grandes
+        num_asig = random.choice([random.randint(140, 160), random.randint(170, 190), random.randint(200, 220), random.randint(230, 250), random.randint(280, 300)])
+        num_salas = random.choice([random.randint(10, 12), random.randint(13, 15), random.randint(16, 18), random.randint(19, 22), random.randint(23, 25)])
+        if num_salas<=12 and num_salas>=10:
+            num_asig=random.randint(140,160)
+        elif num_salas<=15 and num_salas>=13:
+            num_asig=random.randint(170,190)
+        elif num_salas<=18 and num_salas>=16:
+            num_asig = random.randint(200,220)
+        elif num_salas<=22 and num_salas>=19:
+            num_asig = random.randint(230,250)
+        else:
+            num_asig= random.randint(280,300)
+            
+    return num_asig, num_salas
+
+
+
+
+
 """
-num_asignaturas = 20
-num_salas = 10
+num_asignaturas,num_salas=num_salas_asig()
+
 num_dias = 5
 num_bloques = 7
 
