@@ -16,23 +16,28 @@ array[C, S, T] of var 0..1: xcst;  % Variable binaria
 var int: obj = sum(c in C)(sum(s in S)(sum(t in T)(pc[c] * xcst[c, s, t])));
 
 % Restricciones
+% Restricción de Bloques Consecutivos
 constraint forall(c in C where D[c] = 2) (
     forall(t in T where t < max(T) - 1) (
-        xcst[c, s, t] + xcst[c, s, t + 1] <= 2
+        sum(s in S)(xcst[c, s, t]) + sum(s in S)(xcst[c, s, t + 1]) <= 2
     )
 );
 
+% Restricción de Capacidad de Sala
 constraint forall(c in C, s in S, t in T) (
     xcst[c, s, t] = 1 -> rs[s] >= ic[c]
 );
 
+% Restricción de No Solapamiento
 constraint forall(s in S, t in T) (
     sum(c in C)(xcst[c, s, t]) <= 1
 );
 
-constraint sum(c in C where D[c] = 2)(1) >= 0.65 * card(C);
-constraint sum(c in C where D[c] = 1)(1) >= 0.35 * card(C);
+% Restricción de Distribución de Bloques
+constraint (sum(c in C where D[c] = 2)(1) >= 0.65 * card(C));
+constraint (sum(c in C where D[c] = 1)(1) >= 0.35 * card(C));
 
+% Asegurar que los cursos indispensables tengan sala asignada
 constraint forall(c in C where pc[c] >= 6) (
     sum(s in S)(sum(t in T)(xcst[c, s, t])) = D[c]
 );
